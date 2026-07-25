@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"study/greeting"
+
+	"github.com/arayuly/GoStudy/greeting"
 )
 
 type User struct {
