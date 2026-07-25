@@ -1,0 +1,24 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*' # Срабатывает при пуше любого тега, начинающегося с "v"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: |
+            Автоматический релиз для тега ${{ github.ref_name }}.
+            Подробности см. в истории коммитов.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
