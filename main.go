@@ -2,105 +2,61 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/arayuly/GoStudy/greeting"
 )
 
 type User struct {
 	Name    string
-	Age     int
-	Phone   string
-	IsClose bool
-	Ratind  float64
-}
-
-func NewUser(name string, age int, phone string, isClose bool, rating float64) User {
-	if name == "" {
-		return User{}
-	}
-	if age <= 0 || age >= 150 {
-		return User{}
-	}
-	if phone == "" {
-		return User{}
-	}
-	if rating < 0.0 || rating > 10 {
-		return User{}
-	}
-	return User{
-		Name:    name,
-		Age:     age,
-		Phone:   phone,
-		IsClose: isClose,
-		Ratind:  rating,
-	}
-}
-
-func (u *User) ChangeName(newName string) {
-	if newName != "" {
-		u.Name = newName
-	}
-}
-
-func (u *User) ChangeAge(newAge int) {
-	if newAge > 0 && newAge < 150 {
-		u.Age = newAge
-	}
-}
-
-func (u *User) ChangePhone(newPhone string) {
-	if newPhone != "" {
-		u.Phone = newPhone
-	}
-}
-
-func (u *User) CloseAccount() {
-	u.IsClose = true
-}
-
-func (u *User) OpenAccount() {
-	u.IsClose = false
-}
-
-func Greeting(u *User) {
-	fmt.Println("Всем привет!")
-	fmt.Println("Меня зовут,", u.Name)
-	fmt.Println("Мой рейтинг:", u.Ratind)
-	fmt.Println("")
-	u.Name = "Saske"
-}
-
-func (u *User) RatingUp(rating float64) {
-	if u.Ratind+rating <= 10.0 {
-		u.Ratind += rating
-		fmt.Println("Вы добавили рейтинг к пользователю:", u.Name)
-	} else {
-		fmt.Println("Вы не прошли валидацию")
-	}
-}
-
-func (u *User) DownRating(rating float64) {
-	if u.Ratind-rating >= 0 {
-		u.Ratind -= rating
-	}
+	Rating  float64
+	Premium bool
 }
 
 func main() {
-	user := NewUser(
-		"Itachi",
-		1300,
-		"45565465575756",
-		true,
-		9.7,
-	)
-	fmt.Println(user)
-	fmt.Println("")
+	user1 := User{
+		Name:    "Almaz",
+		Rating:  5.5,
+		Premium: true,
+	}
+	user2 := User{
+		Name:    "Shyngys",
+		Rating:  5.5,
+		Premium: false,
+	}
+	user3 := User{
+		Name:    "Muhamedzhan",
+		Rating:  5.5,
+		Premium: true,
+	}
+	user4 := User{
+		Name:    "Dias",
+		Rating:  5.5,
+		Premium: false,
+	}
 
-	Greeting(&user)
-	fmt.Println(user.Name)
+	users := [4]User{user1, user2, user3, user4}
 
-	user.RatingUp(0.1)
-	fmt.Println(user.Ratind)
+	for index, user := range users {
+		fmt.Println(index, user)
 
-	greeting.SayHello()
+		if user.Premium {
+			users[index].Rating += 1.0
+		}
+
+		fmt.Println(users)
+		fmt.Println("")
+	}
+
+	for _, user := range users {
+		fmt.Println(user)
+	}
+	// for i := 0; i < len(users); i++ {
+
+	// 	fmt.Println(users[i])
+
+	// 	if users[i].Premium {
+	// 		users[i].Rating += 1.0
+	// 	}
+
+	// 	fmt.Println(users[i])
+	// 	fmt.Println("")
+	// }
 }
