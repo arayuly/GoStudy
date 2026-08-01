@@ -1,55 +1,66 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
+
+// Введите команду: добавить лук
+// вы хотите добавить лук
+// Введите команду: удалить морковь
+// вы кажется хотите удалить морковь
 
 func main() {
-	// weather := map[int]int{ /*map[Ключ]Значение*/
-	// 	11: +3,
-	// 	12: +6,
-	// 	13: +9,
-	// 	14: -4,
-	// 	15: +1,
-	// 	30: 0,
-	// }
-	// // weather2 := make(map[int]int, 10)
+	scanner := bufio.NewScanner(os.Stdin)
 
-	// c, ok := weather[30]
-	// fmt.Println(weather[11])
-	// fmt.Println(c, ok)
-	// if ok {
-	// 	fmt.Println("Okay")
-	// } else {
-	// 	fmt.Println("Bad")
-	// }
+	for {
+		fmt.Print("Введите команду: ")
 
-	// weather[20] = -10
-	// fmt.Println(weather[20])
+		// scanner.Scan()
+		// if !ok {
+		// 	fmt.Println("Ошибка ввода!")
+		// 	return
+		// }
 
-	// for k, v := range weather {
-	// 	weather[k] += 1
-	// 	fmt.Println(k, v)
-	// }
-	// fmt.Println(weather)
+		if ok := scanner.Scan(); !ok {
+			fmt.Println("Ошибка ввода!")
+			return
+		}
 
-	// нам нужно хранить данные о людях
-	// нужно по имени человека сразу понимать был ли он судим
-	criminal := map[string]bool{
-		"Zhyldyz": true,
-		"Kanagat": false,
-		"Talshyn": false,
-		"Katya":   true,
+		text := scanner.Text()
+
+		fields := strings.Fields(text)
+		if len(fields) == 0 {
+			fmt.Println("Вы ничего не ввели!")
+			return
+		}
+
+		fmt.Println("text:", text)
+
+		fmt.Println("Слова:", fields)
+		fmt.Println("Команда:", fields[0])
+
+		cmd := fields[0]
+
+		if cmd == "выйти" {
+			fmt.Println("До скорого!")
+			return
+		}
+		if cmd == "добавить" {
+			fmt.Println("Вы хотите добавить:", fields[1:])
+		} else if cmd == "удалить" {
+			fmt.Println("Вы кажется хотите удалить:", fields[1:])
+		} else if cmd == "help" {
+			fmt.Println("Команда: добавить {что нужно добавить}")
+			fmt.Println("-- эта команда позволяет добавлять что-то")
+			fmt.Println("")
+			fmt.Println("Команда: добавудалитьить {что нужно удалить}")
+			fmt.Println("-- эта команда позволяет удалять что-то")
+			fmt.Println("")
+		} else {
+			fmt.Println("Вы ввели неизвестную команду")
+		}
 	}
-	c, ok := criminal["Talshyn"]
-	if !ok {
-		fmt.Println("Человек нет в базе!")
-		return
-	}
-	fmt.Println("Человек найден в базе!")
-	if c {
-		fmt.Println("Человек судим!")
-	} else {
-		fmt.Println("Человек не судим!")
-	}
-
-	fmt.Println(criminal)
 }
